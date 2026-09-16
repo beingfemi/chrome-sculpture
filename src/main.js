@@ -227,40 +227,55 @@ tick();
 
 // --- Frame -------------------------------------------------------------------
 
-// The loader walks a light across the sentence, one word at a time, and then
-// clears the sheet. It runs on timers and CSS transitions rather than the
-// render loop: requestAnimationFrame is paused in a background tab, so tying
-// the reveal to it would leave a page opened in the background stuck behind
-// the loader until someone focused it.
-const STAGGER = calm ? 12 : 45;  // ms between one word lighting and the next
-const LIT_TIME = 620;            // how long a single word takes to come up
-const HOLD = 380;                // beat at the end, with the sentence whole
-const LEAD_IN = 140;
+// The loader, matching Unstated's timing: a beat of empty ground, then every
+// word fades up over a slow two seconds, each starting 80ms after the last.
+// Because the fade is so much longer than the stagger, all of the words are in
+// flight at once and the sentence surfaces as a whole with a lean to the left —
+// not a light travelling word by word, which is a much busier effect.
+//
+// It runs on CSS transitions and timers rather than the render loop:
+// requestAnimationFrame is paused in a background tab, so tying the reveal to
+// it would leave a page opened in the background stuck behind the loader.
+const LEAD_IN = calm ? 200 : 1000;   // blank ground before anything surfaces
+const STAGGER = calm ? 20 : 80;      // between one word starting and the next
+const FADE = calm ? 300 : 2000;      // how long a single word takes to arrive
+const HOLD = 500;                    // beat at the end, with the sentence whole
 
 function playOverture() {
-  const words = overture.textContent.trim().split(/\s+/);
-  overture.textContent = '';
-  words.forEach((word, i) => {
-    const span = document.createElement('span');
-    span.textContent = word;
-    overture.append(span);
-    if (i < words.length - 1) overture.append(' ');
-    setTimeout(() => span.classList.add('lit'), LEAD_IN + i * STAGGER);
+  let index = 0;
+  overture.querySelectorAll('p').forEach((line) => {
+    const words = line.textContent.trim().split(/\s+/);
+    line.textContent = '';
+    words.forEach((word, i) => {
+      const span = document.createElement('span');
+      span.className = 'loader-word';
+      span.textContent = word;
+      span.style.transitionDelay = `${index * STAGGER}ms`;
+      line.append(span);
+      if (i < words.length - 1) line.append(' ');
+      index++;
+    });
   });
-  setTimeout(reveal, LEAD_IN + words.length * STAGGER + LIT_TIME + HOLD);
+
+  setTimeout(() => veil.classList.add('lit'), LEAD_IN);
+  setTimeout(reveal, LEAD_IN + (index - 1) * STAGGER + FADE + HOLD);
 }
 
 function reveal() {
   if (ready) return;
   ready = true;
   introAge = 0;  // the sculpture rolls up as the sheet goes
+  veil.classList.add('gone');
   veil.style.opacity = '0';
   setTimeout(() => { veil.style.display = 'none'; }, 560);
   prewarm();
 }
 
+// Clicking anywhere on the sheet skips the wait, as it does on Unstated.
+veil.addEventListener('pointerdown', reveal);
+
 playOverture();
-setTimeout(reveal, 6000);  // backstop, in case the sequence above never lands
+setTimeout(reveal, 9000);  // backstop, in case the sequence above never lands
 
 const clock = new THREE.Clock();
 let elapsed = 0;

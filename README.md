@@ -58,13 +58,23 @@ with secondary text dropped to a grey. No caps, no monospace — the voice is a
 caption in a catalogue rather than a label on a machine. They use a licensed face
 called Antique; this uses Inter, which sits in the same register.
 
-The loader is the same idea as theirs: a centred sentence whose words light up
-one at a time in a left-to-right stagger, so the tail of the line trails off in
-progressively lighter grey until the wave reaches it. It runs on timers and CSS
-transitions rather than the render loop — `requestAnimationFrame` is paused in a
-background tab, and tying the reveal to it would leave a page opened in the
-background stuck behind the loader until someone focused it. The sculpture's own
-intro starts as the sheet clears, so the two read as one movement.
+The loader matches theirs, including its timing. A beat of empty ground for one
+second, then every word fades up over a slow **two** seconds, each starting 80ms
+after the last, and a 500ms hold once the sentence is whole — about 5.4s end to
+end, skippable with a click anywhere.
+
+The long fade against the short stagger is the whole effect, and it is easy to
+get wrong. Because each word takes 2s to arrive but they start only 80ms apart,
+every word is in flight at once: the sentence surfaces as a body, leaning left,
+with the tail trailing off in progressively lighter grey. A short fade with the
+same stagger gives you a light travelling word by word instead — a much busier,
+cheaper-looking thing, and not what they built.
+
+It runs on CSS transitions and timers rather than the render loop —
+`requestAnimationFrame` is paused in a background tab, and tying the reveal to it
+would leave a page opened in the background stuck behind the loader until someone
+focused it. The sculpture's own intro starts as the sheet clears, so the two read
+as one movement.
 
 The palette is not theirs: this keeps its own light and dark modes.
 

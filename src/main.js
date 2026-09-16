@@ -29,7 +29,6 @@ scene.add(rig);
 
 const material = chromeMaterial();
 const wave = material.userData.uniforms;
-const WAVE_AMP = wave.uWaveAmp.value;
 
 // One mesh for all four sculptures. The index buffer is shared and never
 // changes; only the position and normal arrays are rewritten, which is what
@@ -81,10 +80,9 @@ addEventListener('resize', fit);
 
 // --- Morphing ----------------------------------------------------------------
 
+// The morph carries the change of form entirely on its own: no ripple, no
+// flash, just one shape flowing into the next.
 const MORPH_TIME = 1.2;
-// The morph carries the change of form on its own, so the ripple that goes with
-// it is only an accent — a fraction of the wave a strike sends out.
-const MORPH_RIPPLE = 0.3;
 
 let morphFrom = 0;
 let morphTo = 0;
@@ -130,14 +128,15 @@ function settle(index) {
 
 // --- Interaction state -------------------------------------------------------
 
-const PARALLAX = { x: 0.62, y: 0.40 };
+// Wide enough that the sculpture visibly turns to face wherever the cursor is,
+// rather than drifting: about 70 degrees of yaw across the window.
+const PARALLAX = { x: 1.22, y: 0.68 };
 const SPIN_TIME = 1.15;
 const INTRO_TIME = 1.4;
 
 let aimX = 0, aimY = 0;   // where the pointer wants the sculpture to face
 let turnX = 0, turnY = 0; // where it actually is, chasing the aim
 let spinAge = -1, spinDir = 1;
-let waveStrength = 1;
 let introAge = 0;
 let ready = false;
 
@@ -150,10 +149,8 @@ addEventListener('pointermove', (e) => {
   aimY = (e.clientY / innerHeight * 2 - 1) * PARALLAX.y;
 });
 
-function strike(localPoint, strength = 1) {
-  waveStrength = strength;
+function strike(localPoint) {
   wave.uWaveOrigin.value.copy(localPoint);
-  wave.uWaveAmp.value = WAVE_AMP * strength;
   wave.uWaveAge.value = 0;
 }
 
@@ -209,7 +206,6 @@ function select(index) {
   morphAge = 0;
   current = index;
   markPicker();
-  strike(new THREE.Vector3(), MORPH_RIPPLE);
 }
 
 addEventListener('keydown', (e) => {
@@ -252,7 +248,7 @@ function frame() {
 
   // Chase the pointer, frame-rate independent.
   if (ready) {
-    const chase = 1 - Math.pow(1 - 0.075, dt * 60);
+    const chase = 1 - Math.pow(1 - 0.13, dt * 60);
     turnX += (aimY - turnX) * chase;
     turnY += (aimX - turnY) * chase;
   }
@@ -297,9 +293,9 @@ function frame() {
   if (wave.uWaveAge.value >= 0) {
     wave.uWaveAge.value += dt;
     const age = wave.uWaveAge.value;
-    recoil = (age < 0.5
+    recoil = age < 0.5
       ? (1 - Math.cos((age / 0.5) * Math.PI)) / 2
-      : Math.max(0, 1 - (age - 0.5) / 0.45)) * waveStrength;
+      : Math.max(0, 1 - (age - 0.5) / 0.45);
     if (age > WAVE_LIFE) wave.uWaveAge.value = -1;
   }
 

@@ -22,14 +22,20 @@
    are all 12px/400 with a 13.2px line box and -0.12px of tracking. The 1.1 line
    height is the signature: paragraphs stack tightly enough to read as a block.
    No caps, no mono — the voice is a caption in a catalogue, not a label on a
-   machine. */
+   machine.
+
+   The face is Schibsted Grotesk, chosen by measurement rather than by eye:
+   theirs is Antique Legacy Book, a 19th-century grotesque revival, and against
+   it Schibsted sets the lowercase alphabet within 0.1% and the cap height
+   within 0.4%. Inter, which this used first, runs 3% wide with a 6% taller
+   x-height — close enough in category, visibly not the same texture. */
 html, body {
   margin: 0;
   height: 100%;
   overflow: hidden;
   background: var(--paper);
   color: var(--ink);
-  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Schibsted Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
   font-weight: 400;
   line-height: 1.1;

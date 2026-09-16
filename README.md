@@ -57,8 +57,22 @@ site rather than eyeballed. Their whole interface runs on a single value — hea
 links, index numbers and loader are all **12px / 400 weight / 13.2px line box /
 -0.12px tracking**. The 1.1 line height is the signature: paragraphs stack tightly
 enough to read as a block rather than a list of lines. No caps, no monospace — the
-voice is a caption in a catalogue rather than a label on a machine. They use a
-licensed face called Antique; this uses Inter, which sits in the same register.
+voice is a caption in a catalogue rather than a label on a machine.
+
+Their face is Antique Legacy Book, a 19th-century grotesque revival. The stand-in
+here is Schibsted Grotesk, picked by measurement rather than by eye — canvas
+metrics for a dozen free grotesques compared against the real thing at 100px:
+
+| | sample string | lowercase set | x-height | cap height |
+|---|---|---|---|---|
+| Antique Legacy Book | 2942.1 | 1363.2 | 51.5 | 70.0 |
+| **Schibsted Grotesk** | +0.9% | **+0.1%** | +2.3% | +0.4% |
+| Public Sans | +1.1% | +0.6% | +0.4% | +3.3% |
+| Inter | +3.0% | +2.1% | +6.0% | +4.0% |
+
+Inter — the first choice here — is in the right category but 3% wide with a 6%
+taller x-height, which is enough to read as a different texture and to break
+lines in different places. Schibsted wraps where Antique wraps.
 
 The loader block is theirs too: centred, `width: 100%` up to a 60rem cap, with
 16px of side padding. The `width: 100%` is load-bearing — grid centring would

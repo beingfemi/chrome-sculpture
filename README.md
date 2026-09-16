@@ -4,7 +4,7 @@ Four procedural chrome sculptures rendered in real time with three.js. Nothing h
 is modelled or photographed — the geometry, the material and the studio it reflects
 are all generated in the browser at load.
 
-**Live:** _(added after first deploy)_
+**Live:** <https://chrome-sculpture.vercel.app>
 
 ## The pieces
 

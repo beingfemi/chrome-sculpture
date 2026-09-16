@@ -24,18 +24,22 @@
    No caps, no mono — the voice is a caption in a catalogue, not a label on a
    machine.
 
-   The face is Schibsted Grotesk, chosen by measurement rather than by eye:
-   theirs is Antique Legacy Book, a 19th-century grotesque revival, and against
-   it Schibsted sets the lowercase alphabet within 0.1% and the cap height
-   within 0.4%. Inter, which this used first, runs 3% wide with a 6% taller
-   x-height — close enough in category, visibly not the same texture. */
+   The face is Antique Legacy Book (Optimo) — the same one they use — picked up
+   from the local system by family name, the way Helvetica always has been. The
+   trial is not embedded, committed or served from here: anyone with it
+   installed sees it, anyone without falls through to the web stack below. That
+   keeps a trial licence out of a public repo and off a public deploy.
+
+   The web fallback is Schibsted Grotesk, chosen by measurement: against Antique
+   it sets the lowercase alphabet within 0.1% and the cap height within 0.4%, so
+   text lands in the same place either way. */
 html, body {
   margin: 0;
   height: 100%;
   overflow: hidden;
   background: var(--paper);
   color: var(--ink);
-  font-family: "Schibsted Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Antique Legacy Trial Book", "Antique Legacy Trial", "Schibsted Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
   font-weight: 400;
   line-height: 1.1;

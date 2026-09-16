@@ -59,9 +59,17 @@ links, index numbers and loader are all **12px / 400 weight / 13.2px line box /
 enough to read as a block rather than a list of lines. No caps, no monospace — the
 voice is a caption in a catalogue rather than a label on a machine.
 
-Their face is Antique Legacy Book, a 19th-century grotesque revival. The stand-in
-here is Schibsted Grotesk, picked by measurement rather than by eye — canvas
-metrics for a dozen free grotesques compared against the real thing at 100px:
+The face is Antique Legacy Book (Optimo), the same one they use, resolved from
+the local system by family name — the way `font-family: "Helvetica Neue"` always
+has been. The trial is **not** embedded, committed or served from this repo:
+anyone with it installed sees it, anyone without falls through to the web stack.
+That keeps a trial licence out of a public repo and off a public deploy. Verified
+against their live site, the trial is the same font to the decimal — lowercase
+alphabet 1363.2, x-height 51.5, cap height 70.0, identical on both.
+
+The web fallback is Schibsted Grotesk, picked by measurement rather than by eye —
+canvas metrics for a dozen free grotesques compared against the real thing at
+100px:
 
 | | sample string | lowercase set | x-height | cap height |
 |---|---|---|---|---|
@@ -72,7 +80,8 @@ metrics for a dozen free grotesques compared against the real thing at 100px:
 
 Inter — the first choice here — is in the right category but 3% wide with a 6%
 taller x-height, which is enough to read as a different texture and to break
-lines in different places. Schibsted wraps where Antique wraps.
+lines in different places. Schibsted wraps where Antique wraps, so a visitor
+without the licensed face gets the same composition in a near-identical fit.
 
 The loader block is theirs too: centred, `width: 100%` up to a 60rem cap, with
 16px of side padding. The `width: 100%` is load-bearing — grid centring would

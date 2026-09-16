@@ -61,6 +61,10 @@ html, body {
 /* Their loader block: centred, 60rem at most, 16px of side padding, and the
    same 12px/1.1 as everything else. */
 #overture {
+  /* width:100% matters — grid centring would otherwise shrink-wrap the block to
+     its longest line, so the text would break at its natural width instead of
+     the container's, and every line would land in a different place. */
+  width: 100%;
   max-width: 60rem;
   text-align: center;
 }

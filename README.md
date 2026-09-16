@@ -52,11 +52,18 @@ is what you actually see.
 
 ## Type and the loader
 
-The typography follows [unstated.co](https://www.unstated.co): a plain grotesque
-set in sentence case at a small size and a medium weight, tracked slightly tight,
-with secondary text dropped to a grey. No caps, no monospace — the voice is a
-caption in a catalogue rather than a label on a machine. They use a licensed face
-called Antique; this uses Inter, which sits in the same register.
+The typography follows [unstated.co](https://www.unstated.co), measured off their
+site rather than eyeballed. Their whole interface runs on a single value — header,
+links, index numbers and loader are all **12px / 400 weight / 13.2px line box /
+-0.12px tracking**. The 1.1 line height is the signature: paragraphs stack tightly
+enough to read as a block rather than a list of lines. No caps, no monospace — the
+voice is a caption in a catalogue rather than a label on a machine. They use a
+licensed face called Antique; this uses Inter, which sits in the same register.
+
+The loader block is theirs too: centred, `width: 100%` up to a 60rem cap, with
+16px of side padding. The `width: 100%` is load-bearing — grid centring would
+otherwise shrink-wrap the block to its longest line, so the text would break at
+its natural width instead of the container's.
 
 The loader matches theirs, including its timing. A beat of empty ground for one
 second, then every word fades up over a slow **two** seconds, each starting 80ms

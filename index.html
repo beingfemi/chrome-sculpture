@@ -8,6 +8,9 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%97%BF</text></svg>">
 <meta property="og:title" content="Chrome Sculpture">
 <meta property="og:description" content="Four procedural chrome sculptures rendered in real time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./styles.css">
 <script type="importmap">
 {
@@ -21,16 +24,18 @@
 <body>
   <div id="stage"><canvas id="scene"></canvas></div>
 
-  <div id="veil"><span>CASTING</span></div>
+  <div id="veil">
+    <p id="overture">Chrome Sculpture is a study in reflection. Four forms, and the room they reflect, written in code and generated at runtime.</p>
+  </div>
 
   <header class="hud hud-tl">
-    <h1>CHROME SCULPTURE</h1>
-    <p>FOUR FORMS, ONE MATERIAL. EVERY SURFACE HERE IS GENERATED AT RUNTIME — NO MESHES, NO TEXTURES, NO PHOTOGRAPHS. THE METAL HAS NOTHING OF ITS OWN TO SHOW, SO WHAT YOU SEE IS A STUDIO PAINTED INTO A 2048&times;1024 CANVAS AND WRAPPED AROUND THE WORLD. ALL FOUR SCULPTURES ARE EVALUATED OVER ONE 448&times;80 GRID AND SHARE A SINGLE MESH, SO THEY DO NOT CUT BETWEEN FORMS &mdash; THEY FLOW.</p>
+    <h1>Chrome Sculpture</h1>
+    <p>Four forms, one material. Every surface here is generated at runtime — no meshes, no textures, no photographs. The metal has nothing of its own to show, so what you see is a studio painted into a 2048&times;1024 canvas and wrapped around the world. All four sculptures are evaluated over one 448&times;80 grid and share a single mesh, so they do not cut between forms — they flow.</p>
   </header>
 
   <footer class="hud hud-bl">
     <p id="clock">--:--:--</p>
-    <p id="hint">CLICK THE FORM TO RIPPLE IT — CLICK BESIDE IT TO SPIN IT</p>
+    <p id="hint">Click the form to ripple it — click beside it to spin it</p>
   </footer>
 
   <nav class="hud hud-br" id="picker" aria-label="Sculpture form"></nav>

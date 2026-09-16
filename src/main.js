@@ -330,6 +330,3 @@ function prewarm() {
 }
 
 frame();
-
-// TEMP DEBUG
-window.__step = (from, to, t) => { if (t >= 1) settle(to); else blend(from, to, t); rig.rotation.set(0, 0, 0); rig.scale.setScalar(baseScale); renderer.render(scene, camera); };

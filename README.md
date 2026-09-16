@@ -12,8 +12,27 @@ are all generated in the browser at load.
 |---|---|---|
 | A01 | **Knot** | A (2,3) torus knot swept with a cross-section that breathes along its length |
 | B02 | **Column** | A rounded-square superellipse swept up a waisted profile through 3/4 of a turn |
-| C03 | **Mass** | An icosphere displaced by two layers of value noise — broad lobes, fine incident |
-| D04 | **Band** | A Möbius strip with real thickness; the grid meets itself rotated half a ring |
+| C03 | **Mass** | A sphere displaced by two layers of value noise — broad lobes, fine incident |
+| D04 | **Band** | A Möbius strip with real thickness, standing up so the half-twist reads |
+
+## How the morph works
+
+All four are evaluated over the same 448×80 grid and share one index buffer, so
+there is only ever one mesh on screen. Switching form is a lerp from one position
+array into another — nothing is swapped, nothing is cut, so nothing has to be
+hidden. The ripple that goes with a morph is deliberately a third of a struck
+one: the change of shape carries itself, and the wave is only an accent.
+
+The grid is stitched as an open tube. Forms that close on themselves put their
+last row exactly on top of their first — the knot at the same offset, the Möbius
+rotated by half a ring — so the surface closes without any wrap-around quads and
+the index buffer stays identical for every form. Those coincident rows, and the
+collapsed poles of the column and the mass, are separate vertices that
+`computeVertexNormals` would leave a crease across; `healSeams` averages each
+coincident group, which on a mirror is the difference between a sculpture and a
+seam. Normals are lerped alongside positions rather than recomputed each frame —
+a whole blend costs well under a millisecond — and the exact normals are put back
+when the morph settles.
 
 ## How the chrome works
 
@@ -34,7 +53,7 @@ is what you actually see.
 
 - **Click the sculpture** — sends a ripple out from the point you hit
 - **Click beside it** — flicks it through a full revolution
-- **1–4 / ← →** — switch form
+- **1–4 / ← →** — morph to another form
 - **R** — ripple from the centre
 - **Move the pointer** — the sculpture follows you (desktop)
 

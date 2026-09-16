@@ -5,6 +5,7 @@ import { chromeMaterial, WAVE_LIFE } from './material.js';
 
 const canvas = document.getElementById('scene');
 const veil = document.getElementById('veil');
+const overture = document.getElementById('overture');
 const picker = document.getElementById('picker');
 const clockEl = document.getElementById('clock');
 
@@ -137,7 +138,7 @@ const INTRO_TIME = 1.4;
 let aimX = 0, aimY = 0;   // where the pointer wants the sculpture to face
 let turnX = 0, turnY = 0; // where it actually is, chasing the aim
 let spinAge = -1, spinDir = 1;
-let introAge = 0;
+let introAge = -1;  // starts counting when the loader clears
 let ready = false;
 
 const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
@@ -226,17 +227,40 @@ tick();
 
 // --- Frame -------------------------------------------------------------------
 
-// Clearing the veil is deliberately not tied to the render loop alone:
-// requestAnimationFrame is paused in a background tab, so a page opened in the
-// background would otherwise sit on "CASTING" until someone focused it.
+// The loader walks a light across the sentence, one word at a time, and then
+// clears the sheet. It runs on timers and CSS transitions rather than the
+// render loop: requestAnimationFrame is paused in a background tab, so tying
+// the reveal to it would leave a page opened in the background stuck behind
+// the loader until someone focused it.
+const STAGGER = calm ? 12 : 45;  // ms between one word lighting and the next
+const LIT_TIME = 620;            // how long a single word takes to come up
+const HOLD = 380;                // beat at the end, with the sentence whole
+const LEAD_IN = 140;
+
+function playOverture() {
+  const words = overture.textContent.trim().split(/\s+/);
+  overture.textContent = '';
+  words.forEach((word, i) => {
+    const span = document.createElement('span');
+    span.textContent = word;
+    overture.append(span);
+    if (i < words.length - 1) overture.append(' ');
+    setTimeout(() => span.classList.add('lit'), LEAD_IN + i * STAGGER);
+  });
+  setTimeout(reveal, LEAD_IN + words.length * STAGGER + LIT_TIME + HOLD);
+}
+
 function reveal() {
   if (ready) return;
   ready = true;
+  introAge = 0;  // the sculpture rolls up as the sheet goes
   veil.style.opacity = '0';
-  setTimeout(() => { veil.style.display = 'none'; }, 520);
+  setTimeout(() => { veil.style.display = 'none'; }, 560);
   prewarm();
 }
-setTimeout(reveal, 1500);
+
+playOverture();
+setTimeout(reveal, 6000);  // backstop, in case the sequence above never lands
 
 const clock = new THREE.Clock();
 let elapsed = 0;
@@ -253,12 +277,11 @@ function frame() {
     turnY += (aimX - turnY) * chase;
   }
 
-  // Intro: the sculpture rolls up out of a tilt as the veil clears.
-  let intro = 1;
-  if (introAge < INTRO_TIME) {
+  // Intro: the sculpture rolls up out of a tilt once the loader has cleared.
+  let intro = 0;
+  if (introAge >= 0) {
     introAge += dt;
     intro = easeOutCubic(Math.min(introAge / INTRO_TIME, 1));
-    if (introAge > 0.1) reveal();
   }
 
   // A full revolution, eased at both ends.

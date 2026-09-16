@@ -273,10 +273,10 @@ function band() {
 }
 
 export const FORMS = [
-  { id: 'A01', name: 'KNOT', note: '(2,3) TORUS', build: knot },
-  { id: 'B02', name: 'COLUMN', note: 'SWEPT / TWISTED', build: column },
-  { id: 'C03', name: 'MASS', note: 'NOISE DISPLACED', build: mass },
-  { id: 'D04', name: 'BAND', note: 'MÖBIUS, SOLID', build: band },
+  { id: 'A01', name: 'Knot', note: '(2,3) torus', build: knot },
+  { id: 'B02', name: 'Column', note: 'Swept, twisted', build: column },
+  { id: 'C03', name: 'Mass', note: 'Noise displaced', build: mass },
+  { id: 'D04', name: 'Band', note: 'Möbius, solid', build: band },
 ];
 
 const cache = new Map();

@@ -3,7 +3,7 @@
   --ink: #101010;
   --ink-soft: #101010a0;
   --rule: #10101022;
-  --gutter: 20px;
+  --gutter: 12px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -86,67 +86,82 @@ html, body {
 }
 #veil.lit .loader-word { opacity: 1; }
 
+/* The grid, reconstructed from Unstated's own geometry: 12 columns, a 12px
+   column gap and a 12px page margin. Measured off their layout at an 800px
+   viewport, their metadata column starts at x=277, and
+   (800 - 24 - 11*12) / 12 = 53.67px columns puts column 5 at 274.7 — so that
+   is the grid they are on. Every block here is placed on it by column span
+   rather than left to find its own width, which is what stops the paragraph at
+   the top from running the length of the window. */
 .hud {
   position: fixed;
+  left: var(--gutter);
+  right: var(--gutter);
   z-index: 5;
   margin: 0;
   pointer-events: none;
 }
-.hud p, .hud h1 { margin: 0; font-size: inherit; font-weight: inherit; }
-
-.hud-tl {
-  top: var(--gutter);
-  left: var(--gutter);
-  max-width: 52ch;
+.band {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 12px;
+  row-gap: 0;
 }
-.hud-tl h1 { display: inline; }
-.hud-tl p { display: inline; color: var(--ink-soft); }
-.hud-tl h1::after { content: " — "; }
+.band-top { top: var(--gutter); }
+.band-bottom { bottom: var(--gutter); }
 
-.hud-bl { bottom: var(--gutter); left: var(--gutter); }
-.hud-bl #hint { color: var(--ink-soft); }
+.cell { margin: 0; font-size: inherit; font-weight: inherit; }
 
-.hud-br {
-  bottom: var(--gutter);
-  right: var(--gutter);
+.brand   { grid-column: 1 / span 4; }
+.tagline { grid-column: 9 / span 4; text-align: right; color: var(--ink-soft); }
+
+.index {
+  grid-column: 1 / -1;
+  margin-top: 14px;
   display: flex;
-  gap: 1px;
+  gap: 3px;
   pointer-events: auto;
 }
 
-.chip {
+.title   { grid-column: 1 / span 4; margin-top: 12px; }
+.credits { grid-column: 5 / span 8; margin-top: 12px; color: var(--ink-soft); }
+
+/* Five columns. The complaint that started this: left to itself the note ran
+   the width of the window, which at 12px is an unreadable measure. */
+.note    { grid-column: 1 / span 5; margin-top: 12px; color: var(--ink-soft); }
+
+.clock { grid-column: 1 / span 4; }
+.hint  { grid-column: 5 / -1; color: var(--ink-soft); }
+
+/* The numbered index, as theirs does it: the set of forms as figures, the
+   current one boxed. The name and credits for it sit in the row beneath. */
+.num {
   appearance: none;
-  border: 1px solid var(--rule);
+  border: 1px solid transparent;
   background: transparent;
   color: var(--ink-soft);
   font: inherit;
   letter-spacing: inherit;
-  padding: 7px 10px 6px;
+  line-height: 1.1;
+  padding: 1px 5px;
   cursor: pointer;
-  min-width: 78px;
-  text-align: left;
-  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
 }
-.chip b { display: block; font-weight: inherit; }
-.chip i { font-style: normal; opacity: 0.55; }
-.chip:hover { color: var(--ink); border-color: var(--ink); }
-.chip[aria-current="true"] {
+.num:hover { color: var(--ink); }
+.num[aria-current="true"] {
   color: var(--paper);
   background: var(--ink);
   border-color: var(--ink);
 }
-.chip[aria-current="true"] i { opacity: 0.7; }
 
 @media (max-width: 720px) {
-  :root { --gutter: 14px; }
-  .hud-tl { max-width: none; right: var(--gutter); }
-  .hud-tl p { display: none; }
-  .hud-tl h1::after { content: none; }  /* no dash with nothing after it */
-  .hud-bl { bottom: calc(var(--gutter) + 46px); }  /* clear of the chip row */
-  .hud-bl #hint { display: none; }
-  .hud-br { left: var(--gutter); }
-  .chip { flex: 1; min-width: 0; padding: 8px 4px; text-align: center; }
-  .chip i { display: none; }
+  .brand   { grid-column: 1 / span 7; }
+  .tagline { grid-column: 8 / -1; }
+  .title   { grid-column: 1 / span 5; }
+  .credits { grid-column: 6 / -1; }
+  .note    { display: none; }
+  .clock   { grid-column: 1 / -1; }
+  .hint    { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

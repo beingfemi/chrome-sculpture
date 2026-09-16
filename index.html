@@ -31,17 +31,22 @@
     </div>
   </div>
 
-  <header class="hud hud-tl">
-    <h1>Chrome Sculpture</h1>
-    <p>Four forms, one material. Every surface here is generated at runtime — no meshes, no textures, no photographs. The metal has nothing of its own to show, so what you see is a studio painted into a 2048&times;1024 canvas and wrapped around the world. All four sculptures are evaluated over one 448&times;80 grid and share a single mesh, so they do not cut between forms — they flow.</p>
+  <header class="hud band band-top">
+    <h1 class="cell brand">Chrome Sculpture</h1>
+    <p class="cell tagline">Four forms, one material</p>
+
+    <nav class="cell index" id="picker" aria-label="Sculpture form"></nav>
+
+    <p class="cell title"><span id="formId">A01</span> <span id="formName">Knot</span></p>
+    <p class="cell credits" id="formNote">(2,3) torus</p>
+
+    <p class="cell note">Every surface is generated at runtime — no meshes, no textures, no photographs. The metal has nothing of its own to show, so what you see is a studio painted into a canvas and wrapped around the world.</p>
   </header>
 
-  <footer class="hud hud-bl">
-    <p id="clock">--:--:--</p>
-    <p id="hint">Click the form to ripple it — click beside it to spin it</p>
+  <footer class="hud band band-bottom">
+    <p class="cell clock" id="clock">--:--:--</p>
+    <p class="cell hint" id="hint">Click the form to ripple it — click beside it to spin it</p>
   </footer>
-
-  <nav class="hud hud-br" id="picker" aria-label="Sculpture form"></nav>
 
   <script type="module" src="./src/main.js"></script>
 </body>

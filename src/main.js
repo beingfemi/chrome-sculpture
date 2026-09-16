@@ -71,7 +71,7 @@ function fit() {
 
   const halfH = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
   const halfW = halfH * camera.aspect;
-  baseScale = Math.min(halfH, halfW) * (isNarrow() ? 0.84 : 0.78);
+  baseScale = Math.min(halfH, halfW) * (isNarrow() ? 0.68 : 0.58);
 }
 
 let baseScale = 1;

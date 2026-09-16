@@ -20,8 +20,9 @@ are all generated in the browser at load.
 All four are evaluated over the same 448×80 grid and share one index buffer, so
 there is only ever one mesh on screen. Switching form is a lerp from one position
 array into another — nothing is swapped, nothing is cut, so nothing has to be
-hidden. The ripple that goes with a morph is deliberately a third of a struck
-one: the change of shape carries itself, and the wave is only an accent.
+hidden, and the morph carries no ripple at all. The change of shape is the whole
+event; it just gets a slow turn and the faintest dip so it reads as a movement
+rather than a substitution.
 
 The grid is stitched as an open tube. Forms that close on themselves put their
 last row exactly on top of their first — the knot at the same offset, the Möbius
@@ -55,7 +56,7 @@ is what you actually see.
 - **Click beside it** — flicks it through a full revolution
 - **1–4 / ← →** — morph to another form
 - **R** — ripple from the centre
-- **Move the pointer** — the sculpture follows you (desktop)
+- **Move the pointer** — the sculpture turns to face the cursor, about 70° of yaw across the window (desktop)
 
 ## Running it
 

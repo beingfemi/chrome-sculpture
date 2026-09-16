@@ -51,6 +51,14 @@
    The web fallback is Schibsted Grotesk, chosen by measurement: against Antique
    it sets the lowercase alphabet within 0.1% and the cap height within 0.4%, so
    text lands in the same place either way. */
+html {
+  /* Without this, mobile browsers apply their own text autosizing and inflate
+     the type on their own — which is why the font looked wrong on a phone but
+     right in a narrow desktop window. Unstated set the same thing. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 html, body {
   margin: 0;
   height: 100%;

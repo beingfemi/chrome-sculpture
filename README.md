@@ -50,6 +50,24 @@ vertices along their normals and — more importantly — bending those normals 
 slope of the wave. On a mirror the displacement is nearly invisible; the normal bend
 is what you actually see.
 
+## Type and the loader
+
+The typography follows [unstated.co](https://www.unstated.co): a plain grotesque
+set in sentence case at a small size and a medium weight, tracked slightly tight,
+with secondary text dropped to a grey. No caps, no monospace — the voice is a
+caption in a catalogue rather than a label on a machine. They use a licensed face
+called Antique; this uses Inter, which sits in the same register.
+
+The loader is the same idea as theirs: a centred sentence whose words light up
+one at a time in a left-to-right stagger, so the tail of the line trails off in
+progressively lighter grey until the wave reaches it. It runs on timers and CSS
+transitions rather than the render loop — `requestAnimationFrame` is paused in a
+background tab, and tying the reveal to it would leave a page opened in the
+background stuck behind the loader until someone focused it. The sculpture's own
+intro starts as the sheet clears, so the two read as one movement.
+
+The palette is not theirs: this keeps its own light and dark modes.
+
 ## Controls
 
 - **Click the sculpture** — sends a ripple out from the point you hit
@@ -75,5 +93,6 @@ install and nothing to bundle.
 
 The brief was the chrome centrepiece on [fayemi.design](https://fayemi.design) —
 its material language, pointer easing, idle float, click-ripple and full-turn spin.
-Every asset and every line of code here is original; no geometry, texture or source
-was taken from that site.
+The type treatment and the word-by-word loader follow [unstated.co](https://www.unstated.co).
+Every asset and every line of code here is original; no geometry, texture, stylesheet
+or source was taken from either site.

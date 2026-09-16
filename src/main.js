@@ -8,6 +8,9 @@ const veil = document.getElementById('veil');
 const overture = document.getElementById('overture');
 const picker = document.getElementById('picker');
 const clockEl = document.getElementById('clock');
+const formId = document.getElementById('formId');
+const formName = document.getElementById('formName');
+const formNote = document.getElementById('formNote');
 
 const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isNarrow = () => window.innerWidth <= 720;
@@ -181,22 +184,30 @@ canvas.addEventListener('pointerdown', (e) => {
 
 // --- Form picker -------------------------------------------------------------
 
-const chips = FORMS.map((form, i) => {
-  const chip = document.createElement('button');
-  chip.className = 'chip';
-  chip.type = 'button';
-  chip.innerHTML = `<b>${form.id} ${form.name}</b><i>${form.note}</i>`;
+// The set of forms as figures, the current one boxed — their index. The name
+// and note for whichever is current sit in the row beneath it, so nothing is
+// lost by reducing the buttons to numbers.
+const figures = FORMS.map((form, i) => {
+  const button = document.createElement('button');
+  button.className = 'num';
+  button.type = 'button';
+  button.textContent = String(i + 1);
+  button.setAttribute('aria-label', `${form.id} ${form.name}, ${form.note}`);
   // pointerdown so it responds the instant you press; click as well so that
-  // keyboard activation (Enter on a focused chip) works too. select() ignores
+  // keyboard activation (Enter on a focused button) works too. select() ignores
   // the second call because the form is already current by then.
-  chip.addEventListener('pointerdown', () => select(i));
-  chip.addEventListener('click', () => select(i));
-  picker.append(chip);
-  return chip;
+  button.addEventListener('pointerdown', () => select(i));
+  button.addEventListener('click', () => select(i));
+  picker.append(button);
+  return button;
 });
 
 function markPicker() {
-  chips.forEach((chip, i) => chip.setAttribute('aria-current', String(i === current)));
+  figures.forEach((button, i) => button.setAttribute('aria-current', String(i === current)));
+  const form = FORMS[current];
+  formId.textContent = form.id;
+  formName.textContent = form.name;
+  formNote.textContent = form.note;
 }
 markPicker();
 

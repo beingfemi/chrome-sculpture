@@ -37,9 +37,11 @@ html, body {
 #stage { position: fixed; inset: 0; }
 #scene { display: block; width: 100%; height: 100%; touch-action: manipulation; }
 
-/* The loader. Its words light up in a left-to-right stagger, then the whole
-   sheet clears. Decorative only — it must never eat a click, not even mid-fade,
-   and not if the page loaded in a background tab where rAF is paused. */
+/* The loader, after Unstated: a beat of empty ground, then every word fades up
+   over a slow two seconds, each one starting 80ms after the last. The overlap
+   is the whole point — it is not a wave crossing the line word by word so much
+   as the sentence surfacing all at once with a lean to the left. Click to skip,
+   as theirs does, so the wait is never imposed. */
 #veil {
   position: fixed;
   inset: 0;
@@ -49,21 +51,23 @@ html, body {
   background: var(--paper);
   transition: opacity 0.55s ease;
   z-index: 10;
-  pointer-events: none;
+  cursor: pointer;
 }
+#veil.gone { pointer-events: none; }
 
 #overture {
-  margin: 0;
-  max-width: 48ch;
+  max-width: 60rem;
   text-align: center;
   font-size: 15px;
   line-height: 1.5;
 }
-#overture span {
-  opacity: 0.09;
-  transition: opacity 0.62s cubic-bezier(0.22, 1, 0.36, 1);
+#overture p { margin: 0; }
+
+.loader-word {
+  opacity: 0;
+  transition: opacity 2s cubic-bezier(0.65, 0, 0.35, 1);
 }
-#overture span.lit { opacity: 1; }
+#veil.lit .loader-word { opacity: 1; }
 
 .hud {
   position: fixed;
@@ -131,5 +135,5 @@ html, body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #overture span { transition-duration: 0.01s; }
+  .loader-word { transition-duration: 0.3s; }
 }

@@ -1,3 +1,21 @@
+/* Antique Legacy Book (Optimo) — the face Unstated uses — taken from the local
+   system rather than embedded: src: local() means nothing is copied, committed
+   or served from here, which keeps a trial licence out of a public repo.
+
+   The unicode-range is not decoration. Optimo's trial carries only letters,
+   digits, hyphen, comma, period and apostrophe; every other character in it is
+   a placeholder dot, so without this the clock read 09·19·35 and Möbius read
+   M·bius. Declaring the range it actually covers hands everything else to the
+   fallback, which is metrically close enough that the join is invisible at
+   12px. Anyone without the font installed gets the fallback throughout. */
+@font-face {
+  font-family: "Antique Legacy Local";
+  src: local("Antique Legacy Trial Book"), local("AntiqueLegacyTrial-Book");
+  font-weight: 400;
+  font-style: normal;
+  unicode-range: U+0020, U+002C-002E, U+0030-0039, U+0041-005A, U+0061-007A, U+2019;
+}
+
 :root {
   --paper: #e8e8e6;
   --ink: #101010;
@@ -39,7 +57,7 @@ html, body {
   overflow: hidden;
   background: var(--paper);
   color: var(--ink);
-  font-family: "Antique Legacy Trial Book", "Antique Legacy Trial", "Schibsted Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Antique Legacy Local", "Schibsted Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 12px;
   font-weight: 400;
   line-height: 1.1;

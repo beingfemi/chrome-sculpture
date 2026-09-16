@@ -1,0 +1,121 @@
+:root {
+  --paper: #e8e8e6;
+  --ink: #101010;
+  --ink-soft: #101010a0;
+  --rule: #10101022;
+  --gutter: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0c0c0c;
+    --ink: #f2f2f0;
+    --ink-soft: #f2f2f0a0;
+    --rule: #f2f2f026;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 10px;
+  line-height: 1.45;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+}
+
+#stage { position: fixed; inset: 0; }
+#scene { display: block; width: 100%; height: 100%; touch-action: manipulation; }
+
+/* The overlay that hides the first few frames while geometry is being built. */
+#veil {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  color: var(--ink-soft);
+  transition: opacity 0.5s ease;
+  z-index: 10;
+  /* Purely decorative — it must never eat a click, not even mid-fade, and not
+     if the page loaded in a background tab where rAF is paused and the intro
+     has not run yet. */
+  pointer-events: none;
+}
+#veil span { animation: pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.25; } }
+
+.hud {
+  position: fixed;
+  z-index: 5;
+  margin: 0;
+  pointer-events: none;
+}
+.hud p, .hud h1 { margin: 0; font-size: inherit; font-weight: 400; }
+
+.hud-tl {
+  top: var(--gutter);
+  left: var(--gutter);
+  max-width: 46ch;
+}
+.hud-tl h1 { display: inline; }
+.hud-tl p { display: inline; color: var(--ink-soft); }
+.hud-tl h1::after { content: " — "; }
+
+.hud-bl { bottom: var(--gutter); left: var(--gutter); }
+.hud-bl #hint { color: var(--ink-soft); }
+
+.hud-br {
+  bottom: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  gap: 1px;
+  pointer-events: auto;
+}
+
+.chip {
+  appearance: none;
+  border: 1px solid var(--rule);
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  padding: 7px 10px 6px;
+  cursor: pointer;
+  min-width: 68px;
+  text-align: left;
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+.chip b { display: block; font-weight: 400; }
+.chip i { font-style: normal; opacity: 0.55; }
+.chip:hover { color: var(--ink); border-color: var(--ink); }
+.chip[aria-current="true"] {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.chip[aria-current="true"] i { opacity: 0.7; }
+
+@media (max-width: 720px) {
+  :root { --gutter: 14px; }
+  .hud-tl { max-width: none; right: var(--gutter); }
+  .hud-tl p { display: none; }
+  .hud-tl h1::after { content: none; }  /* no dash with nothing after it */
+  .hud-bl { bottom: calc(var(--gutter) + 46px); }  /* clear of the chip row */
+  .hud-bl #hint { display: none; }
+  .hud-br { left: var(--gutter); }
+  .chip { flex: 1; min-width: 0; padding: 8px 4px; text-align: center; }
+  .chip i { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #veil span { animation: none; }
+}

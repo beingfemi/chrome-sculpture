@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chrome Sculpture — Four Forms, One Material</title>
+<meta name="description" content="Four procedural chrome sculptures rendered in real time. Click to send a ripple through the metal.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%97%BF</text></svg>">
+<meta property="og:title" content="Chrome Sculpture">
+<meta property="og:description" content="Four procedural chrome sculptures rendered in real time.">
+<link rel="stylesheet" href="./styles.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+  <div id="stage"><canvas id="scene"></canvas></div>
+
+  <div id="veil"><span>CASTING</span></div>
+
+  <header class="hud hud-tl">
+    <h1>CHROME SCULPTURE</h1>
+    <p>FOUR FORMS, ONE MATERIAL. EVERY SURFACE HERE IS GENERATED AT RUNTIME — NO MESHES, NO TEXTURES, NO PHOTOGRAPHS. THE METAL HAS NOTHING OF ITS OWN TO SHOW, SO WHAT YOU SEE IS A STUDIO PAINTED INTO A 2048&times;1024 CANVAS AND WRAPPED AROUND THE WORLD.</p>
+  </header>
+
+  <footer class="hud hud-bl">
+    <p id="clock">--:--:--</p>
+    <p id="hint">CLICK THE FORM TO RIPPLE IT — CLICK BESIDE IT TO SPIN IT</p>
+  </footer>
+
+  <nav class="hud hud-br" id="picker" aria-label="Sculpture form"></nav>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
